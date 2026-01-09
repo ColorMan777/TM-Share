@@ -1,16 +1,19 @@
 extends Node
 
-const trackmania_maps_path = "Maps/My Maps/"
+const trackmania_maps_path = "Maps/My Maps/" #TM2020 Maps path
 
 var gbx_file
-var trackmania_path:String
+var trackmania_path:String #TM2020 Directory Path
 
 func _ready() -> void:
-	var xml = parse_gbx("res://Assets/TMGamesSurfside Part2.Map.Gbx")
-	#print(xml)
+	get_tree().root.set_min_size(Vector2i(700,500))
 	
 	trackmania_path = get_trackmania_path() + trackmania_maps_path
-	print(trackmania_path)
+	#print(trackmania_path)
+	
+	#var xml = parse_gbx("res://Assets/LevelDesign_Exercise01.Map.Gbx")
+	#var xml = parse_gbx(trackmania_path + "Circuit XUS.Challenge.Gbx")
+	#print(xml)
 	
 	print(list_maps())
 	#list_maps()

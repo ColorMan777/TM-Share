@@ -3,13 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://56snpi8clfgi" path="res://Assets/Sprites/ParametersLogo.svg" id="1_kwblh"]
 
 [node name="Control" type="Control"]
-custom_minimum_size = Vector2(500, 500)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -32,11 +33,12 @@ theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(0.645, 0)
 layout_mode = 2
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_vertical = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Control"]
 layout_mode = 1
@@ -67,6 +69,7 @@ texture_normal = ExtResource("1_kwblh")
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/margin_top = 70
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
