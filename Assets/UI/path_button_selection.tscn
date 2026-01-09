@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://p2kibwu0ag4m"]
+
+[ext_resource type="Script" uid="uid://52tmke1v3bcm" path="res://Assets/Scripts/path_button_selection.gd" id="1_c3q7b"]
+[ext_resource type="Texture2D" uid="uid://dfnu3hwyve570" path="res://Assets/Sprites/FolderLogo.svg" id="1_t1hg0"]
+[ext_resource type="Texture2D" uid="uid://cjs82xeeqtk6m" path="res://Assets/Sprites/RevertLogo.svg" id="3_r4hvb"]
+
+[node name="PathButtonContainer" type="HBoxContainer"]
+offset_right = 1152.0
+offset_bottom = 36.0
+script = ExtResource("1_c3q7b")
+
+[node name="PathButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.46618152, 0.4661805, 0.46618086, 1)
+text = "path/to/trackmania"
+autowrap_mode = 1
+
+[node name="FolderButton" type="TextureButton" parent="."]
+layout_mode = 2
+texture_normal = ExtResource("1_t1hg0")
+
+[node name="RevertButton" type="TextureButton" parent="."]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("3_r4hvb")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+oversampling_override = 1.0
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(679, 360)
+file_mode = 2
+access = 2
+use_native_dialog = true
+
+[connection signal="pressed" from="PathButton" to="." method="_on_path_button_pressed"]
+[connection signal="pressed" from="FolderButton" to="." method="_on_folder_button_pressed"]
+[connection signal="pressed" from="RevertButton" to="." method="_on_revert_button_pressed"]
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
+[connection signal="files_selected" from="FileDialog" to="." method="_on_file_dialog_files_selected"]

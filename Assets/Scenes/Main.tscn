@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2sg012l2un53"]
+[gd_scene load_steps=6 format=3 uid="uid://b2sg012l2un53"]
 
+[ext_resource type="Script" uid="uid://dxrteyqtjn7yu" path="res://Assets/Scripts/ApplicationMenu.gd" id="1_2qpql"]
 [ext_resource type="Texture2D" uid="uid://56snpi8clfgi" path="res://Assets/Sprites/ParametersLogo.svg" id="1_kwblh"]
 [ext_resource type="Texture2D" uid="uid://cgwlga40ckqcd" path="res://Assets/Sprites/ArrowL.svg" id="1_ygaiq"]
-[ext_resource type="Texture2D" uid="uid://dfnu3hwyve570" path="res://Assets/Sprites/FolderLogo.svg" id="2_wkehv"]
+[ext_resource type="PackedScene" uid="uid://p2kibwu0ag4m" path="res://Assets/UI/path_button_selection.tscn" id="4_2qpql"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kwblh"]
 font_size = 18
 font_color = Color(0.6255971, 0.6255971, 0.6255971, 1)
 
-[node name="Control" type="Control"]
+[node name="ApplicationMenu" type="Control" node_paths=PackedStringArray("backButton", "optionButton", "mainMenu", "optionMenu", "titleBar", "trackmaniaPathButton", "mainMenuPathWarning")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +18,16 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_2qpql")
+backButton = NodePath("MarginContainer/VBoxContainer/Control/BackButton")
+optionButton = NodePath("MarginContainer/VBoxContainer/Control/OptionsButton")
+mainMenu = NodePath("MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION")
+optionMenu = NodePath("MarginContainer/VBoxContainer/MarginContainer/OPTIONS")
+titleBar = NodePath("MarginContainer/VBoxContainer/Control/Title")
+trackmaniaPathButton = NodePath("MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer")
+mainMenuPathWarning = NodePath("MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer/Label")
+greenColor = Color(0.54678, 0.78, 0.17160001, 1)
+redColor = Color(1, 0.41000003, 0.41983318, 1)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -60,13 +71,7 @@ theme_override_font_sizes/font_size = 32
 text = "TRACKMANIA_VERSION"
 horizontal_alignment = 1
 
-[node name="OptionButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Control"]
-layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
-texture_normal = ExtResource("1_ygaiq")
-
-[node name="BackButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Control"]
+[node name="OptionsButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -78,12 +83,21 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 texture_normal = ExtResource("1_kwblh")
 
+[node name="BackButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Control"]
+visible = false
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = ExtResource("1_ygaiq")
+
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_constants/margin_top = 70
 
 [node name="TRACKMANIA_VERSION" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION"]
@@ -103,11 +117,10 @@ text = "TRACKMANIA2020"
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "Trackmania 2020 detected"
+text = "INSTALLATION_DETECTED"
 horizontal_alignment = 1
 
 [node name="OPTIONS" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS"]
@@ -122,35 +135,8 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "TRACKMANIA_PATH"
 
-[node name="PathButtonContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath"]
+[node name="PathButtonContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath" instance=ExtResource("4_2qpql")]
 layout_mode = 2
-
-[node name="PathButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.46618152, 0.4661805, 0.46618086, 1)
-text = "path/to/trackmania"
-autowrap_mode = 1
-
-[node name="FolderButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]
-layout_mode = 2
-texture_normal = ExtResource("2_wkehv")
-
-[node name="FileDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]
-oversampling_override = 1.0
-title = "Open File(s)"
-initial_position = 2
-size = Vector2i(643, 360)
-file_mode = 1
-access = 2
-filters = PackedStringArray("*.Gbx", "*.gbx")
-
-[node name="Errors" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6789437, 0.6789437, 0.6789437, 1)
-theme_override_font_sizes/font_size = 18
-text = "Errors"
-horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -158,3 +144,9 @@ size_flags_horizontal = 8
 text = "CREDITS"
 label_settings = SubResource("LabelSettings_kwblh")
 horizontal_alignment = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Control/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Control/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer" to="." method="_on_path_button_container_value_changed"]
+
+[editable path="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]

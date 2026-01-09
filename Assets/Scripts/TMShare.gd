@@ -4,11 +4,17 @@ const trackmania_maps_path = "Maps/My Maps/" #TM2020 Maps path
 
 var gbx_file
 var trackmania_path:String #TM2020 Directory Path
+var default_trackmania_path:String
+var maps_path:String #TM2020 maps path
 
 func _ready() -> void:
 	get_tree().root.set_min_size(Vector2i(700,500))
 	
-	trackmania_path = get_trackmania_path() + trackmania_maps_path
+	default_trackmania_path = get_trackmania_path(false)
+	
+	trackmania_path = get_trackmania_path()
+	if trackmania_maps_path != "":
+		maps_path = get_trackmania_path() + trackmania_maps_path
 	#print(trackmania_path)
 	
 	#var xml = parse_gbx("res://Assets/LevelDesign_Exercise01.Map.Gbx")
@@ -18,7 +24,7 @@ func _ready() -> void:
 	print(list_maps())
 	#list_maps()
 
-func get_trackmania_path(): # return empty string if nothing is found
+func get_trackmania_path(verify_exist=true): # return empty string if nothing is found
 	
 	var p_final = ""
 	
@@ -29,24 +35,28 @@ func get_trackmania_path(): # return empty string if nothing is found
 				if DirAccess.get_drive_name(i) == "C:": #if C: check user / documents
 					var p2 = ProjectSettings.globalize_path("user://")
 					p2 = p2.erase(p2.length() - "AppData/Roaming/Godot/app_userdata/TM-Share/".length(), "AppData/Roaming/Godot/app_userdata/TM-Share/".length())
-					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania/"):
+					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania/") and verify_exist:
 						p_final = p2 + "Documents/Trackmania/"
 				else: # else search Disk / Documents
-					if DirAccess.dir_exists_absolute(DirAccess.get_drive_name(i) + "/Documents/Trackmania/"):
+					if DirAccess.dir_exists_absolute(DirAccess.get_drive_name(i) + "/Documents/Trackmania/") and verify_exist:
 						p_final = DirAccess.get_drive_name(i) + "/Documents/Trackmania/"
+					elif not verify_exist:
+						p_final = "D:/Documents/Trackmania/"
 			
 		"Linux":
 			var p = ProjectSettings.globalize_path("user://") # get path to user Linux
 			p = p.erase(p.length() - ".local/share/godot/app_userdata/TM-Share/".length(), ".local/share/godot/app_userdata/TM-Share/".length())
 			p_final = p + ".steam/debian-installation/steamapps/compatdata/2225070/pfx/drive_c/users/steamuser/Documents/Trackmania/"
 			# This is the steam path on Linux (with Trackmania SteamID)
-			if not DirAccess.dir_exists_absolute(p_final):
+			if not DirAccess.dir_exists_absolute(p_final) and verify_exist:
 				p_final = ""
+			elif not verify_exist:
+				p_final = p + ".steam/debian-installation/steamapps/compatdata/2225070/pfx/drive_c/users/steamuser/Documents/Trackmania/"
 			
 	return p_final
 
 func list_maps(complete_path=false) -> PackedStringArray:
-	var dir = DirAccess.open(trackmania_path)
+	var dir = DirAccess.open(maps_path)
 	var filepaths = PackedStringArray()
 	var extensions = PackedStringArray()
 	extensions = ["gbx", "Gbx"] # for filtering .Gbx
@@ -60,7 +70,7 @@ func list_maps(complete_path=false) -> PackedStringArray:
 			
 			if path.get_extension() in extensions:
 				if complete_path: #full path or just file name
-					var filepath = trackmania_path + path
+					var filepath = maps_path + path
 					filepaths.append(filepath)
 				else:
 					filepaths.append(path)
@@ -73,7 +83,7 @@ func parse_gbx(path:String):
 	#gbx_string = keep_xml_chars(gbx_string) #2nd less binary more xml
 	gbx_string = extract_xml_blocks(gbx_string) # even less binary
 	gbx_string = extract_xml_document(str(gbx_string), "deps") # final cleanups to extract dependencies
-	gbx_string = final_xml_cleaning(gbx_string)
+	gbx_string = final_xml_cleaning(gbx_string) # true final cleanup
 	return gbx_string
 
 
@@ -81,7 +91,7 @@ func import_file(path:String): #Thanks ChatGPT lol
 	var file := FileAccess.open(path, FileAccess.READ)
 
 	var xml_text := ""
-	var max_bytes := 200000 # sécurité
+	var max_bytes := 200000 # security
 
 	for i in range(max_bytes):
 		if file.eof_reached():
@@ -101,7 +111,7 @@ func import_file(path:String): #Thanks ChatGPT lol
 	return xml_text
 
 	
-func keep_xml_chars(text: String) -> String: #DEPRECATED
+func keep_xml_chars(text: String) -> String: #DEPRECATED : I don't even know what that does lol
 	var out := ""
 	for c in text:
 		if c in "<>/=\"' \t\r\n" or c.is_valid_ascii_identifier() or c in ":-_.":
