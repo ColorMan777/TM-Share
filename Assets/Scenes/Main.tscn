@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2sg012l2un53"]
+[gd_scene load_steps=5 format=3 uid="uid://b2sg012l2un53"]
 
 [ext_resource type="Texture2D" uid="uid://56snpi8clfgi" path="res://Assets/Sprites/ParametersLogo.svg" id="1_kwblh"]
+[ext_resource type="Texture2D" uid="uid://cgwlga40ckqcd" path="res://Assets/Sprites/ArrowL.svg" id="1_ygaiq"]
+[ext_resource type="Texture2D" uid="uid://dfnu3hwyve570" path="res://Assets/Sprites/FolderLogo.svg" id="2_wkehv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kwblh"]
+font_size = 18
+font_color = Color(0.6255971, 0.6255971, 0.6255971, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -40,7 +46,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Control"]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -50,11 +56,17 @@ offset_right = 526.0
 offset_bottom = 28.0
 grow_horizontal = 2
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 32
 text = "TRACKMANIA_VERSION"
 horizontal_alignment = 1
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Control"]
+[node name="OptionButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Control"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = ExtResource("1_ygaiq")
+
+[node name="BackButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -71,16 +83,78 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 70
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+[node name="TRACKMANIA_VERSION" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer2"]
+[node name="GameButtonContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "TRACKMANIA2020"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Trackmania 2020 detected"
+horizontal_alignment = 1
+
+[node name="OPTIONS" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TrackmaniaPath" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath"]
+layout_mode = 2
+text = "TRACKMANIA_PATH"
+
+[node name="PathButtonContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath"]
+layout_mode = 2
+
+[node name="PathButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.46618152, 0.4661805, 0.46618086, 1)
+text = "path/to/trackmania"
+autowrap_mode = 1
+
+[node name="FolderButton" type="TextureButton" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_wkehv")
+
+[node name="FileDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]
+oversampling_override = 1.0
+title = "Open File(s)"
+initial_position = 2
+size = Vector2i(643, 360)
+file_mode = 1
+access = 2
+filters = PackedStringArray("*.Gbx", "*.gbx")
+
+[node name="Errors" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6789437, 0.6789437, 0.6789437, 1)
+theme_override_font_sizes/font_size = 18
+text = "Errors"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "CREDITS"
+label_settings = SubResource("LabelSettings_kwblh")
+horizontal_alignment = 2
