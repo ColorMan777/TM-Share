@@ -49,6 +49,7 @@ func _on_folder_button_pressed() -> void:
 
 func _on_revert_button_pressed() -> void:
 	update_value(default_value)
+	emit_signal("value_changed", value)
 	revertButton.visible = false
 
 func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:

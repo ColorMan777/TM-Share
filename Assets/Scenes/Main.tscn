@@ -9,7 +9,7 @@
 font_size = 18
 font_color = Color(0.6255971, 0.6255971, 0.6255971, 1)
 
-[node name="ApplicationMenu" type="Control" node_paths=PackedStringArray("backButton", "optionButton", "mainMenu", "optionMenu", "titleBar", "trackmaniaPathButton", "mainMenuPathWarning")]
+[node name="ApplicationMenu" type="Control" node_paths=PackedStringArray("backButton", "optionButton", "mainMenu", "optionMenu", "titleBar", "trackmaniaPathButton", "mainMenuPathWarning", "pathErrorLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +26,7 @@ optionMenu = NodePath("MarginContainer/VBoxContainer/MarginContainer/OPTIONS")
 titleBar = NodePath("MarginContainer/VBoxContainer/Control/Title")
 trackmaniaPathButton = NodePath("MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer")
 mainMenuPathWarning = NodePath("MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer/Label")
+pathErrorLabel = NodePath("MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/ErrorLabel")
 greenColor = Color(0.54678, 0.78, 0.17160001, 1)
 redColor = Color(1, 0.41000003, 0.41983318, 1)
 
@@ -137,6 +138,12 @@ text = "TRACKMANIA_PATH"
 
 [node name="PathButtonContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath" instance=ExtResource("4_2qpql")]
 layout_mode = 2
+
+[node name="ErrorLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "INSTALLATION_DETECTED"
+horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -24,6 +24,10 @@ func _ready() -> void:
 	print(list_maps())
 	#list_maps()
 
+func update_trackmania_path(new_path:String):
+	trackmania_path = new_path
+	maps_path = trackmania_path + "/" +  trackmania_maps_path
+
 func get_trackmania_path(verify_exist=true): # return empty string if nothing is found
 	
 	var p_final = ""

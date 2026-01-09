@@ -7,6 +7,7 @@ extends Control
 @export var titleBar: Control
 @export var trackmaniaPathButton: Control
 @export var mainMenuPathWarning: Control
+@export var pathErrorLabel: Control
 
 @export var greenColor: Color
 @export var redColor: Color
@@ -17,13 +18,10 @@ func _ready() -> void:
 	trackmaniaPathButton.default_value = TmShare.default_trackmania_path
 	
 	if TmShare.trackmania_path != "":
-		trackmaniaPathButton.update_value(TmShare.trackmania_path)
-		mainMenuPathWarning.text = "INSTALLATION_DETECTED"
-		mainMenuPathWarning.set("theme_override_colors/font_color", greenColor)
+		update_text_colors(true)
 	
 	else:
-		mainMenuPathWarning.text = "INSTALLATION_NOT_DETECTED"
-		mainMenuPathWarning.set("theme_override_colors/font_color", redColor)
+		update_text_colors(false)
 
 func main_menu():
 	backButton.visible = false
@@ -37,6 +35,19 @@ func option_menu():
 	optionMenu.visible = true
 	titleBar.text = optionMenu.name
 
+func update_text_colors(good_path:bool):
+	if good_path:
+		trackmaniaPathButton.update_value(TmShare.trackmania_path)
+		mainMenuPathWarning.text = "INSTALLATION_DETECTED"
+		mainMenuPathWarning.set("theme_override_colors/font_color", greenColor)
+		pathErrorLabel.set("theme_override_colors/font_color", greenColor)
+		pathErrorLabel.text = "INSTALLATION_DETECTED"
+	else:
+		mainMenuPathWarning.text = "INSTALLATION_NOT_DETECTED"
+		mainMenuPathWarning.set("theme_override_colors/font_color", redColor)
+		pathErrorLabel.set("theme_override_colors/font_color", redColor)
+		pathErrorLabel.text = "INSTALLATION_NOT_DETECTED"
+
 func _on_options_button_pressed() -> void:
 	option_menu()
 
@@ -45,4 +56,8 @@ func _on_back_button_pressed() -> void:
 		main_menu()
 
 func _on_path_button_container_value_changed(value: Variant) -> void: #UPDATE WHEN FOLDER SELECTED
-	TmShare.trackmania_path = value
+	TmShare.update_trackmania_path(value)
+	if DirAccess.dir_exists_absolute(TmShare.maps_path):
+		update_text_colors(true)
+	else:
+		update_text_colors(false)
