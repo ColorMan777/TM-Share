@@ -3,35 +3,17 @@ extends Control
 var gbx_file
 
 func _ready() -> void:
-	#print(load_from_file())
-	#gbx_file = load_from_file()
-	var test = import_file("res://Assets/LevelDesign_Exercise01.Map.Gbx")
-	test = keep_xml_chars(test)
-	test = extract_xml_blocks(test)
-	test = extract_xml_document(str(test), "deps")
-	print(test)
-	#var parser = XMLParser.new()
-	#parser.open("res://Assets/LevelDesign_Exercise01.Map.Gbx")
-	#print(parser.read())
-	#while parser.read() != ERR_FILE_EOF:
-		#if parser.get_node_type() == XMLParser.NODE_ELEMENT:
-			#var node_name = parser.get_node_name()
-			#var attributes_dict = {}
-			#for idx in range(parser.get_attribute_count()):
-				#attributes_dict[parser.get_attribute_name(idx)] = parser.get_attribute_value(idx)
-			#print("The ", node_name, " element has the following attributes: ", attributes_dict)
-	
-#func load_from_file():
-	##print(FileAccess.file_exists("res://Assets/LevelDesign_Exercise01.Map.Gbx"))
-	##var file = FileAccess.open("res://Assets/LevelDesign_Exercise01.Map.Gbx", FileAccess.READ)
-	##var content = file.get_as_text()
-	##var bytes = FileAccess.get_file_as_bytes("res://Assets/TMGamesSurfside Part2.Map.Gbx")
-	##var content = bytes.get_string_from_ascii()
-	##return content
-	#
-	#var file := FileAccess.open("res://Assets/LevelDesign_Exercise01.Map.Gbx", FileAccess.READ)
-	#var bytes: PackedByteArray = file.get_buffer(file.get_length())
-	##print(bytes.get_string_from_ascii())
+	var xml = parse_gbx("res://Assets/LevelDesign_Exercise01.Map.Gbx")
+	print(xml)
+
+
+func parse_gbx(path:String):
+	var gbx_string = import_file(path) #1st import with lot of binary
+	#gbx_string = keep_xml_chars(gbx_string) #2nd less binary more xml
+	gbx_string = extract_xml_blocks(gbx_string) # even less binary
+	gbx_string = extract_xml_document(str(gbx_string), "deps") # final cleanups to extract dependencies
+	gbx_string = final_xml_cleaning(gbx_string)
+	return gbx_string
 
 
 func import_file(path:String): #Thanks ChatGPT lol
@@ -93,3 +75,45 @@ func extract_xml_document(text: String, root: String) -> String:
 
 	end += ("</" + root + ">").length()
 	return text.substr(start, end - start)
+
+
+func format_xml(raw_text: String) -> String:
+	# Step 1: Replace the escaped quotes (\") with actual quotes (")
+	var cleaned_text := raw_text.replace("\\\"", "\"")
+
+	# Step 2: Add newlines between tags (this assumes the structure is correctly formed)
+	var formatted_text := cleaned_text.replace("<", "\n<").replace(">", ">\n").strip_edges()
+
+	return formatted_text
+
+func final_xml_cleaning(xml:String):
+
+	var regex := RegEx.new()
+	regex.compile("<[^>]+>")  # Compiles the regex pattern
+
+	var matches := regex.search_all(xml)  # Find all matches
+
+	var tags := []
+	for match in matches:
+		tags.append(match.strings[0])  # Add the matched tag to the array
+		
+	var final = format_xml("".join(tags))
+	final = final.replace('<dep file="', "")
+	final = final.replace('"/>', "")
+	final = final.replace(r'<deps>', "")
+	final = final.replace(r'</deps>', "")
+	final = final.replace(r'\\', "/") #r'//' because r help since // is a line jump
+	
+
+	return lines_to_array(final)
+
+func lines_to_array(raw_text: String) -> Array:
+	# Split the string into lines based on newline character "\n"
+	var lines = raw_text.split("\n")
+	var final_line = []
+	# Remove leading and trailing spaces from each line
+	for i in lines:
+		if i != "":
+			final_line.append(i)
+			
+	return final_line
