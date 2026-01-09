@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2sg012l2un53"]
+[gd_scene load_steps=7 format=3 uid="uid://b2sg012l2un53"]
 
 [ext_resource type="Script" uid="uid://dxrteyqtjn7yu" path="res://Assets/Scripts/ApplicationMenu.gd" id="1_2qpql"]
 [ext_resource type="Texture2D" uid="uid://56snpi8clfgi" path="res://Assets/Sprites/ParametersLogo.svg" id="1_kwblh"]
 [ext_resource type="Texture2D" uid="uid://cgwlga40ckqcd" path="res://Assets/Sprites/ArrowL.svg" id="1_ygaiq"]
+[ext_resource type="PackedScene" uid="uid://dq0bdi8o6nhxd" path="res://Assets/Scenes/MapOptions.tscn" id="2_gjahs"]
 [ext_resource type="PackedScene" uid="uid://p2kibwu0ag4m" path="res://Assets/UI/path_button_selection.tscn" id="4_2qpql"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kwblh"]
@@ -19,6 +20,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_2qpql")
+mapOptionScene = ExtResource("2_gjahs")
 backButton = NodePath("MarginContainer/VBoxContainer/Control/BackButton")
 optionButton = NodePath("MarginContainer/VBoxContainer/Control/OptionsButton")
 mainMenu = NodePath("MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION")
@@ -155,6 +157,7 @@ horizontal_alignment = 2
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Control/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Control/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer/Trackmania2020Button" to="." method="_on_trackmania_2020_button_pressed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer" to="." method="_on_path_button_container_value_changed"]
 
 [editable path="MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer"]

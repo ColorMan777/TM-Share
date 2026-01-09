@@ -1,5 +1,7 @@
 extends Control
 
+var mapOptionScene:String = "res://Assets/Scenes/MapOptions.tscn"
+
 @export var backButton: Control
 @export var optionButton: Control
 @export var mainMenu: Control
@@ -64,3 +66,7 @@ func _on_path_button_container_value_changed(value: Variant) -> void: #UPDATE WH
 		update_text_colors(true)
 	else:
 		update_text_colors(false)
+
+
+func _on_trackmania_2020_button_pressed() -> void:
+	get_tree().change_scene_to_file(mapOptionScene)

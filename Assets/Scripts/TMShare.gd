@@ -21,7 +21,7 @@ func _ready() -> void:
 	#var xml = parse_gbx(trackmania_path + "Circuit XUS.Challenge.Gbx")
 	#print(xml)
 	
-	print(list_maps())
+	#print(list_maps())
 	#list_maps()
 
 func update_trackmania_path(new_path:String):

@@ -1,0 +1,95 @@
+[gd_scene load_steps=5 format=3 uid="uid://dq0bdi8o6nhxd"]
+
+[ext_resource type="Texture2D" uid="uid://dx8uf65opbnl" path="res://Assets/Sprites/ImportLogo.svg" id="1_1m68b"]
+[ext_resource type="Script" uid="uid://bjnrgj8etu4co" path="res://Assets/Scripts/map_options.gd" id="1_26hi3"]
+[ext_resource type="Texture2D" uid="uid://cgwlga40ckqcd" path="res://Assets/Sprites/ArrowL.svg" id="1_hxb1l"]
+[ext_resource type="Texture2D" uid="uid://negm2ximhnmo" path="res://Assets/Sprites/ExportLogo.svg" id="1_j44sm"]
+
+[node name="MapOptions" type="Control" node_paths=PackedStringArray("backButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_26hi3")
+backButton = NodePath("MarginContainer/VBoxContainer2/Control/BackButton")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer2/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -526.0
+offset_right = 526.0
+offset_bottom = 28.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "CHOOSE_MODE"
+horizontal_alignment = 1
+
+[node name="BackButton" type="TextureButton" parent="MarginContainer/VBoxContainer2/Control"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = ExtResource("1_hxb1l")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_top = 45
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="ImportButton" type="Button" parent="MarginContainer/VBoxContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+text = "IMPORT"
+icon = ExtResource("1_1m68b")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ExportButton" type="Button" parent="MarginContainer/VBoxContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+text = "EXPORT"
+icon = ExtResource("1_j44sm")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/Control/BackButton" to="." method="_on_back_button_pressed"]
