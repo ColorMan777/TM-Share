@@ -4,23 +4,35 @@ var gbx_file
 
 func _ready() -> void:
 	var xml = parse_gbx("res://Assets/TMGamesSurfside Part2.Map.Gbx")
-	print(xml)
+	#print(xml)
 	
 	get_trackmania_path()
 
 func get_trackmania_path():
 	
+	var p_final = ""
+	
 	match OS.get_name():
 		"Windows":
-			var p2 = DirAccess.get_drive_count() #list Windows C / D / etc
-			for i in p2:
-				print(DirAccess.get_drive_name(i))
+			var p = DirAccess.get_drive_count() #list Windows C / D / etc
+			for i in p:
+				if DirAccess.get_drive_name(i) == "C:":
+					var p2 = ProjectSettings.globalize_path("user://")
+					p2 = p2.erase(p2.length() - "AppData/Roaming/Godot/app_userdata/TM-Share/".length(), "AppData/Roaming/Godot/app_userdata/TM-Share/".length())
+					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania/"):
+						p_final = p2 + "Documents/Trackmania/"
+				else:
+					if DirAccess.dir_exists_absolute(DirAccess.get_drive_name(i) + "/Documents/Trackmania/"):
+						p_final = DirAccess.get_drive_name(i) + "/Documents/Trackmania/"
+			
+
 		
 		"Linux":
 			var p = ProjectSettings.globalize_path("user://") # get path to user Linux
 			p = p.erase(p.length() - ".local/share/godot/app_userdata/TM-Share/".length(), ".local/share/godot/app_userdata/TM-Share/".length())
-			print(p)
-
+			p_final = p + "/Trackmania/"
+			
+	print(p_final)
 
 func parse_gbx(path:String):
 	var gbx_string = import_file(path) #1st import with lot of binary
