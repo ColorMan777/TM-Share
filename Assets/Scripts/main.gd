@@ -1,6 +1,7 @@
 extends Control
 
 var gbx_file
+var trackmania_path:String
 
 func _ready() -> void:
 	var xml = parse_gbx("res://Assets/TMGamesSurfside Part2.Map.Gbx")
@@ -8,7 +9,7 @@ func _ready() -> void:
 	
 	get_trackmania_path()
 
-func get_trackmania_path():
+func get_trackmania_path(): # return empty string if nothing is found
 	
 	var p_final = ""
 	
@@ -16,23 +17,24 @@ func get_trackmania_path():
 		"Windows":
 			var p = DirAccess.get_drive_count() #list Windows C / D / etc
 			for i in p:
-				if DirAccess.get_drive_name(i) == "C:":
+				if DirAccess.get_drive_name(i) == "C:": #if C: check user / documents
 					var p2 = ProjectSettings.globalize_path("user://")
 					p2 = p2.erase(p2.length() - "AppData/Roaming/Godot/app_userdata/TM-Share/".length(), "AppData/Roaming/Godot/app_userdata/TM-Share/".length())
 					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania/"):
 						p_final = p2 + "Documents/Trackmania/"
-				else:
+				else: # else search Disk / Documents
 					if DirAccess.dir_exists_absolute(DirAccess.get_drive_name(i) + "/Documents/Trackmania/"):
 						p_final = DirAccess.get_drive_name(i) + "/Documents/Trackmania/"
 			
-
-		
 		"Linux":
 			var p = ProjectSettings.globalize_path("user://") # get path to user Linux
 			p = p.erase(p.length() - ".local/share/godot/app_userdata/TM-Share/".length(), ".local/share/godot/app_userdata/TM-Share/".length())
-			p_final = p + "/Trackmania/"
+			p_final = p + ".steam/debian-installation/steamapps/compatdata/2225070/pfx/drive_c/users/steamuser/Documents/Trackmania/"
+			# This is the steam path on Linux (with Trackmania SteamID)
+			if not DirAccess.dir_exists_absolute(p_final):
+				p_final = ""
 			
-	print(p_final)
+	return p_final
 
 func parse_gbx(path:String):
 	var gbx_string = import_file(path) #1st import with lot of binary
