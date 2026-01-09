@@ -8,6 +8,7 @@ extends Control
 @export var trackmaniaPathButton: Control
 @export var mainMenuPathWarning: Control
 @export var pathErrorLabel: Control
+@export var trackmania2020Button: Control
 
 @export var greenColor: Color
 @export var redColor: Color
@@ -42,11 +43,13 @@ func update_text_colors(good_path:bool):
 		mainMenuPathWarning.set("theme_override_colors/font_color", greenColor)
 		pathErrorLabel.set("theme_override_colors/font_color", greenColor)
 		pathErrorLabel.text = "INSTALLATION_DETECTED"
+		trackmania2020Button.disabled = false
 	else:
 		mainMenuPathWarning.text = "INSTALLATION_NOT_DETECTED"
 		mainMenuPathWarning.set("theme_override_colors/font_color", redColor)
 		pathErrorLabel.set("theme_override_colors/font_color", redColor)
 		pathErrorLabel.text = "INSTALLATION_NOT_DETECTED"
+		trackmania2020Button.disabled = true
 
 func _on_options_button_pressed() -> void:
 	option_menu()

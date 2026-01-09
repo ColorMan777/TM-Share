@@ -9,7 +9,7 @@
 font_size = 18
 font_color = Color(0.6255971, 0.6255971, 0.6255971, 1)
 
-[node name="ApplicationMenu" type="Control" node_paths=PackedStringArray("backButton", "optionButton", "mainMenu", "optionMenu", "titleBar", "trackmaniaPathButton", "mainMenuPathWarning", "pathErrorLabel")]
+[node name="ApplicationMenu" type="Control" node_paths=PackedStringArray("backButton", "optionButton", "mainMenu", "optionMenu", "titleBar", "trackmaniaPathButton", "mainMenuPathWarning", "pathErrorLabel", "trackmania2020Button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +27,7 @@ titleBar = NodePath("MarginContainer/VBoxContainer/Control/Title")
 trackmaniaPathButton = NodePath("MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/PathButtonContainer")
 mainMenuPathWarning = NodePath("MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer/Label")
 pathErrorLabel = NodePath("MarginContainer/VBoxContainer/MarginContainer/OPTIONS/VBoxContainer2/TrackmaniaPath/ErrorLabel")
+trackmania2020Button = NodePath("MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer/Trackmania2020Button")
 greenColor = Color(0.54678, 0.78, 0.17160001, 1)
 redColor = Color(1, 0.41000003, 0.41983318, 1)
 
@@ -98,7 +99,6 @@ mouse_filter = 2
 theme_override_constants/margin_top = 70
 
 [node name="TRACKMANIA_VERSION" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION"]
@@ -110,7 +110,7 @@ alignment = 1
 [node name="GameButtonContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer"]
+[node name="Trackmania2020Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/TRACKMANIA_VERSION/VBoxContainer2/GameButtonContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "TRACKMANIA2020"
@@ -122,6 +122,7 @@ text = "INSTALLATION_DETECTED"
 horizontal_alignment = 1
 
 [node name="OPTIONS" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/OPTIONS"]
