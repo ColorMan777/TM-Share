@@ -39,12 +39,13 @@ func get_trackmania_path(verify_exist=true): # return empty string if nothing is
 				if DirAccess.get_drive_name(i) == "C:": #if C: check user / documents
 					var p2 = ProjectSettings.globalize_path("user://")
 					p2 = p2.erase(p2.length() - "AppData/Roaming/Godot/app_userdata/TM-Share/".length(), "AppData/Roaming/Godot/app_userdata/TM-Share/".length())
-					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania/") and verify_exist:
+					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania/"):
 						p_final = p2 + "Documents/Trackmania/"
+					
 				else: # else search Disk / Documents
 					if DirAccess.dir_exists_absolute(DirAccess.get_drive_name(i) + "/Documents/Trackmania/") and verify_exist:
 						p_final = DirAccess.get_drive_name(i) + "/Documents/Trackmania/"
-					elif not verify_exist:
+					elif not verify_exist and p_final == "":
 						p_final = "D:/Documents/Trackmania/"
 			
 		"Linux":
