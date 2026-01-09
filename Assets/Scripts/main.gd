@@ -5,6 +5,22 @@ var gbx_file
 func _ready() -> void:
 	var xml = parse_gbx("res://Assets/TMGamesSurfside Part2.Map.Gbx")
 	print(xml)
+	
+	get_trackmania_path()
+
+func get_trackmania_path():
+	
+	match OS.get_name():
+		"Windows":
+			var p2 = DirAccess.get_drive_count() #list Windows C / D / etc
+			for i in p2:
+				print(DirAccess.get_drive_name(i))
+		
+		"Linux":
+			var p = ProjectSettings.globalize_path("user://") # get path to user Linux
+			p = p.erase(p.length() - ".local/share/godot/app_userdata/TM-Share/".length(), ".local/share/godot/app_userdata/TM-Share/".length())
+	
+	#print(p)
 
 
 func parse_gbx(path:String):
