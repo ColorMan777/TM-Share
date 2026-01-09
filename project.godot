@@ -14,9 +14,17 @@ config/name="TM-Share"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+TmShare="*res://Assets/Scripts/TMShare.gd"
+
 [gui]
 
 theme/custom="uid://b0lq1hftp5y88"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://Assets/Translations/UI_translations.en.translation", "res://Assets/Translations/UI_translations.fr.translation")
 
 [rendering]
 

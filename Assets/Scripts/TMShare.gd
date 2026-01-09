@@ -1,6 +1,6 @@
-extends Control
+extends Node
 
-const maps_path = "Maps/My Maps/"
+const trackmania_maps_path = "Maps/My Maps/"
 
 var gbx_file
 var trackmania_path:String
@@ -9,7 +9,7 @@ func _ready() -> void:
 	var xml = parse_gbx("res://Assets/TMGamesSurfside Part2.Map.Gbx")
 	#print(xml)
 	
-	trackmania_path = get_trackmania_path() + maps_path
+	trackmania_path = get_trackmania_path() + trackmania_maps_path
 	print(trackmania_path)
 	
 	print(list_maps())
@@ -46,7 +46,7 @@ func list_maps(complete_path=false) -> PackedStringArray:
 	var dir = DirAccess.open(trackmania_path)
 	var filepaths = PackedStringArray()
 	var extensions = PackedStringArray()
-	extensions = ["gbx", "Gbx"]
+	extensions = ["gbx", "Gbx"] # for filtering .Gbx
 
 	if dir:
 		dir.list_dir_begin()
@@ -56,8 +56,7 @@ func list_maps(complete_path=false) -> PackedStringArray:
 			if path == "": break
 			
 			if path.get_extension() in extensions:
-				# items.append(LevelSelection.new(path))
-				if complete_path:
+				if complete_path: #full path or just file name
 					var filepath = trackmania_path + path
 					filepaths.append(filepath)
 				else:
