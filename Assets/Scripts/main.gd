@@ -19,8 +19,7 @@ func get_trackmania_path():
 		"Linux":
 			var p = ProjectSettings.globalize_path("user://") # get path to user Linux
 			p = p.erase(p.length() - ".local/share/godot/app_userdata/TM-Share/".length(), ".local/share/godot/app_userdata/TM-Share/".length())
-	
-	#print(p)
+			print(p)
 
 
 func parse_gbx(path:String):
