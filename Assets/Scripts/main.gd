@@ -3,7 +3,7 @@ extends Control
 var gbx_file
 
 func _ready() -> void:
-	var xml = parse_gbx("res://Assets/LevelDesign_Exercise01.Map.Gbx")
+	var xml = parse_gbx("res://Assets/TMGamesSurfside Part2.Map.Gbx")
 	print(xml)
 
 
@@ -40,7 +40,7 @@ func import_file(path:String): #Thanks ChatGPT lol
 	return xml_text
 
 	
-func keep_xml_chars(text: String) -> String:
+func keep_xml_chars(text: String) -> String: #DEPRECATED
 	var out := ""
 	for c in text:
 		if c in "<>/=\"' \t\r\n" or c.is_valid_ascii_identifier() or c in ":-_.":
@@ -104,7 +104,6 @@ func final_xml_cleaning(xml:String):
 	final = final.replace(r'</deps>', "")
 	final = final.replace(r'\\', "/") #r'//' because r help since // is a line jump
 	
-
 	return lines_to_array(final)
 
 func lines_to_array(raw_text: String) -> Array:
@@ -114,6 +113,8 @@ func lines_to_array(raw_text: String) -> Array:
 	# Remove leading and trailing spaces from each line
 	for i in lines:
 		if i != "":
+			if i.contains('" url='):
+				i = i.erase(i.find('" url='), i.length() - i.find('" url=') ) # clean URLs since we don't need to copy them : external dependencies not local
 			final_line.append(i)
 			
 	return final_line
