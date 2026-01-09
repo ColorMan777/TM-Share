@@ -1,5 +1,7 @@
 extends Control
 
+const maps_path = "Maps/My Maps/"
+
 var gbx_file
 var trackmania_path:String
 
@@ -7,7 +9,11 @@ func _ready() -> void:
 	var xml = parse_gbx("res://Assets/TMGamesSurfside Part2.Map.Gbx")
 	#print(xml)
 	
-	get_trackmania_path()
+	trackmania_path = get_trackmania_path() + maps_path
+	print(trackmania_path)
+	
+	print(list_maps())
+	#list_maps()
 
 func get_trackmania_path(): # return empty string if nothing is found
 	
@@ -35,6 +41,30 @@ func get_trackmania_path(): # return empty string if nothing is found
 				p_final = ""
 			
 	return p_final
+
+func list_maps(complete_path=false) -> PackedStringArray:
+	var dir = DirAccess.open(trackmania_path)
+	var filepaths = PackedStringArray()
+	var extensions = PackedStringArray()
+	extensions = ["gbx", "Gbx"]
+
+	if dir:
+		dir.list_dir_begin()
+		while true:
+			var path := dir.get_next()
+			
+			if path == "": break
+			
+			if path.get_extension() in extensions:
+				# items.append(LevelSelection.new(path))
+				if complete_path:
+					var filepath = trackmania_path + path
+					filepaths.append(filepath)
+				else:
+					filepaths.append(path)
+			
+		dir.list_dir_end()
+	return filepaths
 
 func parse_gbx(path:String):
 	var gbx_string = import_file(path) #1st import with lot of binary
