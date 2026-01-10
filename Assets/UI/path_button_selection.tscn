@@ -19,6 +19,7 @@ autowrap_mode = 1
 [node name="FolderButton" type="TextureButton" parent="."]
 layout_mode = 2
 texture_normal = ExtResource("1_t1hg0")
+stretch_mode = 3
 
 [node name="RevertButton" type="TextureButton" parent="."]
 visible = false

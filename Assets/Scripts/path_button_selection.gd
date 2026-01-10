@@ -6,6 +6,7 @@ extends HBoxContainer
 @onready var revertButton = $RevertButton
 
 @export_enum("FOLDER", "MAPS") var MODE: int
+@export var no_revert = false
 
 signal value_changed(value)
 
@@ -42,7 +43,8 @@ func _on_path_button_pressed() -> void:
 func _on_file_dialog_dir_selected(dir: String) -> void:
 	update_value(dir)
 	emit_signal("value_changed", value)
-	revertButton.visible = true
+	if not no_revert:
+		revertButton.visible = true
 
 func _on_folder_button_pressed() -> void:
 	_on_path_button_pressed()
@@ -54,4 +56,5 @@ func _on_revert_button_pressed() -> void:
 
 func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
 	update_value(paths)
-	revertButton.visible = true
+	if not no_revert:
+		revertButton.visible = true

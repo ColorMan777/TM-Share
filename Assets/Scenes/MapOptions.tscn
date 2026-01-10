@@ -93,3 +93,4 @@ icon_alignment = 1
 expand_icon = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/Control/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HBoxContainer/ExportButton" to="." method="_on_export_button_pressed"]

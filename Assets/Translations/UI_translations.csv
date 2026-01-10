@@ -7,3 +7,8 @@ TRACKMANIA_PATH,Trackmania Path (2020),Chemin vers Trackmania (2020)
 INSTALLATION_DETECTED,Installation path detected,Dossier du jeu détecté
 INSTALLATION_NOT_DETECTED,INSTALLATION NOT DETECTED ! See Options,DOSSIER DU JEU NON DÉTECTÉ ! Voir les Options
 CHOOSE_MODE,Choose Mode,Choisir un Mode
+IMPORT,Import,Importer
+EXPORT,Export,Exporter
+PATH,Path,Chemin
+EXPORT_FOLDER,Export Folder,Dossier d’exportation
+NO_MAPS_FOUND,No Maps Found :(,Aucune Map Trouvée :(
