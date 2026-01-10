@@ -220,9 +220,13 @@ func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
 	var dir = DirAccess.open("user://") # user:// is used as a temp folder
 	var map_name = map_path.get_file().replace(".Map.Gbx", "")
 	var deps_array = [] # config file for easier import later
-	
 	for d in deps:
-		var d_path = trackmania_path + d
+		var d_path
+		if trackmania_path.ends_with("/"):
+			d_path = trackmania_path + d
+		else:
+			d_path = trackmania_path + "/" + d
+		#print(d_path)
 		var d_file = FileAccess.open(d_path, FileAccess.READ) # read to see if exist before copy
 		if d_file != null: #built-in trackmania dependencies are skipped here
 			
