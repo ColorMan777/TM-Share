@@ -226,7 +226,7 @@ func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
 		var d_file = FileAccess.open(d_path, FileAccess.READ) # read to see if exist before copy
 		if d_file != null: #built-in trackmania dependencies are skipped here
 			
-			deps_array.append(d)
+			deps_array.append(d) #local deps added (not built-in trackmania)
 			var d_directories = d_path.get_base_dir().replace(trackmania_path, "")
 			
 			
