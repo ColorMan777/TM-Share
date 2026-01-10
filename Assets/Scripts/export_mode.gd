@@ -61,7 +61,7 @@ func _on_export_button_pressed() -> void:
 	progressBar.value = 0
 	for map in map_selection:
 		var export_map = available_maps.get(map)
-		print(export_map)
+		#print(export_map)
 		TmShare.export_maps(TmShare.maps_path + export_map, export_path)
 		progressBar.value += 100.0 / map_selection.size() # progress bar based on how many maps exported (I don't know how to do it better... call deferred maybe idk)
 		#print(progressBar.value)
