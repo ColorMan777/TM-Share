@@ -60,7 +60,7 @@ func get_trackmania_path(verify_exist=true): # return empty string if nothing is
 			elif not verify_exist:
 				p_final = p + ".steam/debian-installation/steamapps/compatdata/2225070/pfx/drive_c/users/steamuser/Documents/Trackmania/"
 			
-	if not p_final.ends_with("/"):
+	if not p_final.ends_with("/") and not p_final == "":
 		p_final = p_final + "/"
 		
 	return p_final
@@ -285,8 +285,14 @@ func import_maps(path:String): ### IMPORT MAPS BASED ON PATH + return progress i
 			for d in deps:
 				#print("user://" + base_dir + "/" + d)
 				#print(trackmania_path + d)
-				if not dir.file_exists(trackmania_path + d):
-					dir.copy("user://" + base_dir + "/" + d, trackmania_path + d) # COPY DEPENDENCY
+				var t_path
+				if not trackmania_path.ends_with("/"):
+					t_path = trackmania_path + "/"
+				else:
+					t_path = trackmania_path
+				
+				if not dir.file_exists(t_path + d):
+					dir.copy("user://" + base_dir + "/" + d, t_path + d) # COPY DEPENDENCY
 				else:
 					import_logs_label.text += "[color=yellow]" + tr("DEPS_ALREADY_EXIST") + d + "[/color]" + "\n"
 				
