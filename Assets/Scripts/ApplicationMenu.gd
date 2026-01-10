@@ -54,7 +54,10 @@ func update_text_colors(good_path:bool): # updates colors etc | for ex. text als
 		trackmania2020Button.disabled = true
 
 func _on_options_button_pressed() -> void:
-	option_menu()
+	if not titleBar.text == optionMenu.name: # toggle option menu
+		option_menu()
+	else:
+		main_menu()
 
 func _on_back_button_pressed() -> void:
 	if titleBar.text == optionMenu.name:
