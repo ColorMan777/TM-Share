@@ -195,19 +195,38 @@ func lines_to_array(raw_text: String) -> Array:
 			
 	return final_line
 
+func save_json(data, path:String):
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		return
+	var json_text := JSON.stringify(data)
+	file.store_string(json_text)
+	file.close()
+	
+func load_json(path:String):
+	if not FileAccess.file_exists(path):
+		return null
+	var file := FileAccess.open(path, FileAccess.READ)
+	var content := file.get_as_text()
+	file.close()
+	
+	var result = JSON.parse_string(content)
+	return result
+
 func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
 	var deps = parse_gbx(map_path) # deps array from map path
 	#print(deps)
 	
 	var dir = DirAccess.open("user://") # user:// is used as a temp folder
 	var map_name = map_path.get_file().replace(".Map.Gbx", "")
+	var deps_array = [] # config file for easier import later
 	
 	for d in deps:
 		var d_path = trackmania_path + d
 		var d_file = FileAccess.open(d_path, FileAccess.READ) # read to see if exist before copy
 		if d_file != null: #built-in trackmania dependencies are skipped here
 			
-			
+			deps_array.append(d)
 			var d_directories = d_path.get_base_dir().replace(trackmania_path, "")
 			
 			
@@ -224,4 +243,10 @@ func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
 				dir.copy(d_path, "user://" + map_name + "/" + d) # copy files and overwrite
 	
 	#print(ProjectSettings.globalize_path("user://" + map_name + "/" + map_path.get_file())) #GBX path (temp dir)
-	dir.copy(map_path, "user://" + map_name + "/" + map_path.get_file())
+	dir.copy(map_path, "user://" + map_name + "/" + map_path.get_file()) #copy map
+	save_json(deps_array, "user://" + map_name + "/" + map_path.get_file() + ".json") #copy deps array
+	#print(load_json("user://" + map_name + "/" + map_path.get_file() + ".json")) #test load json
+	
+	### TEMP DIRECTORY CREATED + COPY OF FILES + DEPENDENCIES
+	
+	
