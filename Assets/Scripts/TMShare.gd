@@ -194,3 +194,7 @@ func lines_to_array(raw_text: String) -> Array:
 			final_line.append(i)
 			
 	return final_line
+
+func export_maps(map_path:String, export_path:String):
+	var deps = parse_gbx(map_path)
+	print(deps)

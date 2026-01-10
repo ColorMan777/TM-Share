@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://52aiu8uac1fk"]
+[gd_scene load_steps=7 format=3 uid="uid://52aiu8uac1fk"]
 
 [ext_resource type="Script" uid="uid://cjtbvqylk35p5" path="res://Assets/Scripts/export_mode.gd" id="1_6wb6w"]
 [ext_resource type="Texture2D" uid="uid://cgwlga40ckqcd" path="res://Assets/Sprites/ArrowL.svg" id="1_l61xj"]
 [ext_resource type="Texture2D" uid="uid://cf5ifi3c5d56g" path="res://Assets/Sprites/RoadLogo.svg" id="2_ip2nl"]
 [ext_resource type="PackedScene" uid="uid://p2kibwu0ag4m" path="res://Assets/UI/path_button_selection.tscn" id="3_j4xyr"]
+[ext_resource type="Texture2D" uid="uid://cjs82xeeqtk6m" path="res://Assets/Sprites/RevertLogo.svg" id="4_i2glo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wb6w"]
 bg_color = Color(0.54509807, 0.78039217, 0.17254902, 1)
@@ -13,7 +14,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 6
 
-[node name="ExportMode" type="Control"]
+[node name="ExportMode" type="Control" node_paths=PackedStringArray("itemList", "exportButton", "progressBar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +22,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6wb6w")
+itemList = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer/ItemList")
+mapsIcons = ExtResource("2_ip2nl")
+exportButton = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/MarginContainer/ExportButton")
+progressBar = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/ProgressBar")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -80,11 +85,22 @@ theme_override_constants/margin_top = 45
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 16
 
-[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/ScrollContainer"]
+[node name="RefreshButton" type="Button" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+text = "REFRESH"
+icon = ExtResource("4_i2glo")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer"]
 auto_translate_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
@@ -97,7 +113,6 @@ select_mode = 1
 allow_reselect = true
 item_count = 12
 same_column_width = true
-fixed_column_width = 200
 item_0/text = "EXPORT"
 item_0/icon = ExtResource("2_ip2nl")
 item_1/text = "gggggg"
@@ -115,7 +130,7 @@ item_10/text = "ggggg"
 item_10/icon = ExtResource("2_ip2nl")
 item_11/text = "ggggg"
 
-[node name="NoMapsLabel" type="Label" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/ScrollContainer/ItemList"]
+[node name="NoMapsLabel" type="Label" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer/ItemList"]
 auto_translate_mode = 1
 visible = false
 layout_mode = 1
@@ -160,7 +175,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/margin_top = 32
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/MarginContainer"]
+[node name="ExportButton" type="Button" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "EXPORT"
@@ -173,6 +188,9 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_6wb6w")
 value = 61.42
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/Control/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="multi_selected" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/ScrollContainer/ItemList" to="." method="_on_item_list_multi_selected"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/RefreshButton" to="." method="_on_refresh_button_pressed"]
+[connection signal="multi_selected" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer/ItemList" to="." method="_on_item_list_multi_selected"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/PathButtonContainer" to="." method="_on_path_button_container_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/MarginContainer/ExportButton" to="." method="_on_export_button_pressed"]
 
 [editable path="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/PathButtonContainer"]
