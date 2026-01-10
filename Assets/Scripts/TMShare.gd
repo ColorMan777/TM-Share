@@ -249,11 +249,20 @@ func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
 	
 	### TEMP DIRECTORY CREATED + COPY OF FILES + DEPENDENCIES
 	
-	var zip_writer = ZIPPacker.new() #create ZIP archive
-	zip_writer.open("user://" + map_name + ".zip")
-	zip_dir(map_name, zip_writer)
+	var zip_writer = ZIPPacker.new() #init zip packer
+	zip_writer.open("user://" + map_name + ".zip") #create zip container
+	zip_dir(map_name, zip_writer) #create ZIP archive (put files in etc)
 	zip_writer.close()
 	
+	### ZIP DONE YAY :)
+	
+	#print(ProjectSettings.globalize_path("user://" + map_name + ".zip"))
+	dir.copy("user://" + map_name + ".zip", export_path + "/" + map_name + ".zip") # copy zip to final destination
+	
+	dir.remove("user://" + map_name + ".zip") # remove temp files
+	rmdir("user://" + map_name)
+
+
 func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this function to : https://github.com/jhlothamer/godot_project_zip/blob/main/addons/project_zip/godot_project_zip_plugin.gd
 	var dir := DirAccess.open("user://%s" % dir_name) # Thanks a lot it was so hard I could't figure it out :(
 	if !dir:
@@ -272,3 +281,10 @@ func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this fun
 			writer.write_file(file_contents)
 			writer.close_file()
 		file_name = dir.get_next()
+
+func rmdir(directory: String) -> void: #Credits : https://github.com/Elip100/godot_remove_directory/blob/main/addons/remove_directory/rmdir.gd
+	for file in DirAccess.get_files_at(directory):
+		DirAccess.remove_absolute(directory.path_join(file))
+	for dir in DirAccess.get_directories_at(directory):
+		rmdir(directory.path_join(dir))
+	DirAccess.remove_absolute(directory)
