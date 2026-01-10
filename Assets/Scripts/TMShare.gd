@@ -249,4 +249,26 @@ func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
 	
 	### TEMP DIRECTORY CREATED + COPY OF FILES + DEPENDENCIES
 	
+	var zip_writer = ZIPPacker.new() #create ZIP archive
+	zip_writer.open("user://" + map_name + ".zip")
+	zip_dir(map_name, zip_writer)
+	zip_writer.close()
 	
+func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this function to : https://github.com/jhlothamer/godot_project_zip/blob/main/addons/project_zip/godot_project_zip_plugin.gd
+	var dir := DirAccess.open("user://%s" % dir_name) # Thanks a lot it was so hard I could't figure it out :(
+	if !dir:
+		printerr("could not open project directory user://%s" % dir_name)
+		return
+	dir.include_hidden = true
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		var full_file_path := "%s/%s" % [dir_name, file_name]
+		if dir.current_is_dir():
+			zip_dir(full_file_path, writer)
+		else:
+			var file_contents := FileAccess.get_file_as_bytes("user://%s" % full_file_path)
+			writer.start_file(full_file_path)
+			writer.write_file(file_contents)
+			writer.close_file()
+		file_name = dir.get_next()
