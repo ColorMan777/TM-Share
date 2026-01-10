@@ -83,7 +83,7 @@ func list_maps(complete_path=false) -> PackedStringArray:
 		dir.list_dir_end()
 	return filepaths
 
-func parse_gbx(path:String):
+func parse_gbx(path:String): #Whole parser (different functions used - thx ChatGPT I'm too bad for this lol)
 	var gbx_string = import_file(path) #1st import with lot of binary
 	#gbx_string = keep_xml_chars(gbx_string) #2nd less binary more xml
 	gbx_string = extract_xml_blocks(gbx_string) # even less binary

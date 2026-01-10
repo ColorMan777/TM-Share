@@ -173,5 +173,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_6wb6w")
 value = 61.42
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/Control/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="multi_selected" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/ScrollContainer/ItemList" to="." method="_on_item_list_multi_selected"]
 
 [editable path="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/PathButtonContainer"]

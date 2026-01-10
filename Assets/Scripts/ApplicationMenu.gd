@@ -26,19 +26,19 @@ func _ready() -> void:
 	else:
 		update_text_colors(false)
 
-func main_menu():
+func main_menu(): # show main menu (same scene)
 	backButton.visible = false
 	mainMenu.visible = true
 	optionMenu.visible = false
 	titleBar.text = mainMenu.name
 
-func option_menu():
+func option_menu(): # show option menu (same scene)
 	backButton.visible = true
 	mainMenu.visible = false
 	optionMenu.visible = true
 	titleBar.text = optionMenu.name
 
-func update_text_colors(good_path:bool):
+func update_text_colors(good_path:bool): # updates colors etc | for ex. text also if path is found or not
 	if good_path:
 		trackmaniaPathButton.update_value(TmShare.trackmania_path)
 		mainMenuPathWarning.text = "INSTALLATION_DETECTED"
