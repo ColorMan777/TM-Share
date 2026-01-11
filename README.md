@@ -18,5 +18,7 @@ Trailer : https://www.youtube.com/watch?v=zQfv4YcwyRU
 Basically the app reads .Gbx maps and copy dependencies along in a zip (+ create a JSON in the archive)
 In import mode it automatically extract everything in "My Maps" Folder.
 You can do batch import / export with it to speed up the process.
+
+
  
 <img width="1920" height="1080" alt="TmShare_Splash" src="https://github.com/user-attachments/assets/cd6aca5e-cc1f-4f34-9f57-40a514736e13" />
