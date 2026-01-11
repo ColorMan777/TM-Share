@@ -13,6 +13,7 @@ config_version=5
 config/name="TM-Share"
 run/main_scene="uid://b2sg012l2un53"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/image="uid://dkrpf6x1ch023"
 config/icon="res://icon.svg"
 
 [autoload]
