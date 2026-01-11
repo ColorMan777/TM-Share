@@ -213,7 +213,7 @@ func load_json(path:String):
 	var result = JSON.parse_string(content)
 	return result
 
-func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
+func export_maps(map_path:String, export_path:String): ### EXPORT MAPS FUNCTION
 	var deps = parse_gbx(map_path) # deps array from map path
 	#print(deps)
 	
@@ -266,6 +266,9 @@ func export_maps(map_path:String, export_path:String): #EXPORT FUNCTION
 	dir.remove("user://" + map_name + ".zip") # remove temp files
 	rmdir("user://" + map_name)
 
+
+func import_maps(path:String): ### IMPORT MAPS BASED ON PATH
+	pass
 
 func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this function to : https://github.com/jhlothamer/godot_project_zip/blob/main/addons/project_zip/godot_project_zip_plugin.gd
 	var dir := DirAccess.open("user://%s" % dir_name) # Thanks a lot it was so hard I could't figure it out :(

@@ -27,7 +27,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="ImportMode" type="Control" node_paths=PackedStringArray("fileDialog", "importButton", "importSection", "itemList", "warningDialog")]
+[node name="ImportMode" type="Control" node_paths=PackedStringArray("fileDialog", "importButton", "importSection", "itemList", "warningDialog", "logsLabel", "progressBar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,6 +41,8 @@ importSection = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitC
 itemList = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer/ItemList")
 mapsIcons = ExtResource("5_7tacp")
 warningDialog = NodePath("WarningDialog")
+logsLabel = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/VSplitContainer/RichTextLabel")
+progressBar = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/ProgressBar")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -185,7 +187,7 @@ alignment = 1
 layout_mode = 2
 theme_override_constants/margin_top = 128
 
-[node name="ImportButton" type="Button" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/MarginContainer"]
+[node name="ImportMapsButton" type="Button" parent="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_font_sizes/font_size = 32
@@ -234,3 +236,4 @@ dialog_autowrap = true
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/HBoxContainer/RemoveAllButton" to="." method="_on_remove_all_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/HBoxContainer/RemoveButton2" to="." method="_on_remove_button_2_pressed"]
 [connection signal="multi_selected" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer/ItemList" to="." method="_on_item_list_multi_selected"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/MarginContainer/ImportMapsButton" to="." method="_on_import_maps_button_pressed"]

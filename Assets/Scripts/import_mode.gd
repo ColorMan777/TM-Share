@@ -6,6 +6,8 @@ extends Control
 @export var itemList:Control
 @export var mapsIcons:Texture2D
 @export var warningDialog:Window
+@export var logsLabel:Control
+@export var progressBar:Control
 
 var modeScene: String = "res://Assets/Scenes/MapOptions.tscn"
 
@@ -57,6 +59,8 @@ func import_files_list(files):
 func show_import_button():
 	importButton.visible = true
 	importSection.visible = false
+	logsLabel.text = ""
+	progressBar.value = 0
 
 func show_import_section():
 	importButton.visible = false
@@ -73,11 +77,8 @@ func reset_import(all=false):
 		itemList.deselect_all() # deselect all maps in item list
 		map_selection.sort() # sort selection bigger smaller numbers first
 		map_selection.reverse() # reverse to get bigger number first since we're going to remove by id : remove the end of the array first
-		for r in map_selection: # remove maps in selectio
-			#print(import_files)
-			#print(r)
-			import_files.remove_at(r)
-			#map_selection.remove_at(r)
+		for r in map_selection: # remove maps in selection
+			import_files.remove_at(r) # the inverted array stuff was so hard and so dumb to figure out it's killing me lol
 			itemList.remove_item(r)
 		map_selection = [] # reset map selection after every selected maps is removed
 		
@@ -104,3 +105,8 @@ func _on_item_list_multi_selected(index: int, selected: bool) -> void: # SELECTI
 	else:
 		map_selection.remove_at(map_selection.find(index)) #Deselction
 	
+
+func _on_import_maps_button_pressed() -> void:
+	for map in import_files:
+		#NOT IMPORT FILE FUNCTION -> IMPORT MAPS
+		TmShare.import_maps(map)
