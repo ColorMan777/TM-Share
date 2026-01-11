@@ -20,7 +20,7 @@ func _ready() -> void:
 	
 	trackmaniaPathButton.default_value = TmShare.default_trackmania_path
 	
-	if TmShare.trackmania_path != "":
+	if TmShare.trackmania_path != "" and TmShare.trackmania_path.ends_with("Trackmania") or TmShare.trackmania_path.ends_with("Trackmania/"):
 		update_text_colors(true)
 	
 	else:
@@ -47,6 +47,8 @@ func update_text_colors(good_path:bool): # updates colors etc | for ex. text als
 		pathErrorLabel.text = "INSTALLATION_DETECTED"
 		trackmania2020Button.disabled = false
 	else:
+		trackmaniaPathButton.update_value(TmShare.trackmania_path)
+		trackmaniaPathButton.revert()
 		mainMenuPathWarning.text = "INSTALLATION_NOT_DETECTED"
 		mainMenuPathWarning.set("theme_override_colors/font_color", redColor)
 		pathErrorLabel.set("theme_override_colors/font_color", redColor)

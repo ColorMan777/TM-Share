@@ -2,6 +2,8 @@ extends Node ### THIS IS THE MAIN SINGLETON ###
 
 const trackmania_maps_path = "Maps/My Maps/" #TM2020 Maps path
 
+var config = ConfigFile.new()
+
 var gbx_file
 var trackmania_path:String #TM2020 Directory Path
 var default_trackmania_path:String
@@ -14,9 +16,18 @@ func _ready() -> void:
 	
 	default_trackmania_path = get_trackmania_path(false)
 	
-	trackmania_path = get_trackmania_path()
-	if trackmania_maps_path != "":
-		maps_path = get_trackmania_path() + trackmania_maps_path
+	if config.load("user://config.cfg") != OK: #if config not exist get auto trackmania path
+		trackmania_path = get_trackmania_path()
+		config_init() # store trackmania path
+		if trackmania_maps_path != "":
+			maps_path = get_trackmania_path() + trackmania_maps_path
+	else: # else load config
+		trackmania_path = config.get_value("PATHS", "trackmania_path")
+		if trackmania_path.ends_with("Trackmania"):
+			maps_path = trackmania_path + trackmania_maps_path
+	
+
+		
 	#print(trackmania_path)
 	
 	#var xml = parse_gbx("res://Assets/LevelDesign_Exercise01.Map.Gbx")
@@ -26,8 +37,13 @@ func _ready() -> void:
 	#print(list_maps())
 	#list_maps()
 
+func config_init():
+	config.set_value("PATHS", "trackmania_path", trackmania_path)
+	config.save("user://config.cfg")
+
 func update_trackmania_path(new_path:String):
 	trackmania_path = new_path
+	config_init()
 	maps_path = trackmania_path + "/" +  trackmania_maps_path
 
 func get_trackmania_path(verify_exist=true): # return empty string if nothing is found

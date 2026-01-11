@@ -8,11 +8,13 @@ extends HBoxContainer
 @export_enum("FOLDER", "MAPS") var MODE: int
 @export var no_revert = false
 
+
 signal value_changed(value)
 
 var default_value = "" # to revert back
 var value
 var file_extension: PackedStringArray = ["*.Gbx", "*.gbx"] # maps extensions
+
 
 func _ready() -> void:
 	revertButton.visible = false
@@ -32,7 +34,10 @@ func _ready() -> void:
 			fileDialog.set_file_mode(1)
 			fileDialog.use_native_dialog = false
 			fileDialog.filters = file_extension
-	
+
+func revert(state=true):
+	revertButton.visible = state
+
 func update_value(val):
 	value = val
 	pathButton.text = str(value).replace('"', "").replace("[", "").replace("]", "")
