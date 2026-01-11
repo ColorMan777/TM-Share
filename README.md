@@ -13,7 +13,7 @@ Trailer : https://www.youtube.com/watch?v=zQfv4YcwyRU
  If you want you can test it out with my maps :
  https://github.com/ColorMan777/TrackMania-Maps/
 
- ##HOW DOES IT WORK ?
+ ## HOW DOES IT WORK ?
 
 Basically the app reads .Gbx maps and copy dependencies along in a zip (+ create a JSON in the archive)
 In import mode it automatically extract everything in "My Maps" Folder.
