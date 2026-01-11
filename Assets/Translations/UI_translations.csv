@@ -19,3 +19,4 @@ REMOVE_ALL,Remove ALL,Enlever TOUT
 REMOVE_SELECTED,Remove Selected,Enlever Sélection
 WARNING,WARNING,ATTENTION
 NOT_IMPORTED,Not imported (maps need to be in .zip format) : \n,Non importé (les maps doivent être sous format .zip) : \n
+NOT_TMSHARE_MADE,This file wasn’t made with TmShare and wasn’t added : \n,Ce fichier n’a pas été fait avec TmShare et n’a pas été ajouté : \n

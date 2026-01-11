@@ -267,7 +267,7 @@ func export_maps(map_path:String, export_path:String): ### EXPORT MAPS FUNCTION
 	rmdir("user://" + map_name)
 
 
-func import_maps(path:String): ### IMPORT MAPS BASED ON PATH
+func import_maps(path:String): ### IMPORT MAPS BASED ON PATH + return progress in string
 	pass
 
 func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this function to : https://github.com/jhlothamer/godot_project_zip/blob/main/addons/project_zip/godot_project_zip_plugin.gd

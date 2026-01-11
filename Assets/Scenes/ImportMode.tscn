@@ -27,7 +27,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="ImportMode" type="Control" node_paths=PackedStringArray("fileDialog", "importButton", "importSection", "itemList", "warningDialog", "logsLabel", "progressBar")]
+[node name="ImportMode" type="Control" node_paths=PackedStringArray("fileDialog", "importButton", "importSection", "itemList", "warningDialog", "warningDialog2", "logsLabel", "progressBar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,6 +41,7 @@ importSection = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitC
 itemList = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer/ItemList")
 mapsIcons = ExtResource("5_7tacp")
 warningDialog = NodePath("WarningDialog")
+warningDialog2 = NodePath("WarningDialog2")
 logsLabel = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/VSplitContainer/RichTextLabel")
 progressBar = NodePath("MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer/ProgressBar")
 
@@ -224,6 +225,13 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="WarningDialog" type="AcceptDialog" parent="."]
+oversampling_override = 1.0
+title = "WARNING"
+initial_position = 2
+size = Vector2i(500, 256)
+dialog_autowrap = true
+
+[node name="WarningDialog2" type="AcceptDialog" parent="."]
 oversampling_override = 1.0
 title = "WARNING"
 initial_position = 2

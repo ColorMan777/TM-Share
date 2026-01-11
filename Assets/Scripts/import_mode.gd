@@ -5,7 +5,8 @@ extends Control
 @export var importSection:Control
 @export var itemList:Control
 @export var mapsIcons:Texture2D
-@export var warningDialog:Window
+@export var warningDialog:Window # for not imported
+@export var warningDialog2:Window # for not made in tmshare
 @export var logsLabel:Control
 @export var progressBar:Control
 
@@ -15,6 +16,7 @@ var map_selection = [] # for menu selection only
 
 var import_files = [] # files to import at the end
 var not_imported = [] # failed import (not good extension etc)
+var not_made_tmshare = [] # for files not made in tmshare and not imported
 
 func _ready() -> void:
 	get_viewport().files_dropped.connect(on_files_dropped)
@@ -32,28 +34,52 @@ func _on_file_dialog_files_selected(paths: PackedStringArray) -> void: # FILE DI
 
 func import_files_list(files):
 	not_imported = [] # reset not imported (not cumulative like imported)
+	not_made_tmshare = []
 	
 	for f in files:
 		if f.ends_with(".zip"): # zip archive filtering
-			if import_files.find(f) == -1:
-				import_files.append(f) #cumulative import
-				itemList.add_item(f.get_file(), mapsIcons)
+			
+			if have_zip_config_file(f):
+				if import_files.find(f) == -1:
+					import_files.append(f) #cumulative import
+					itemList.add_item(f.get_file(), mapsIcons)
+			else:
+				if not_made_tmshare.find(f) == -1:
+					not_made_tmshare.append(f)
 		else:
 			if not_imported.find(f) == -1:
 				not_imported.append(f)
 	
-	if not_imported.size() > 0:
-		var error = ""
-		for bad in not_imported:
-			error += bad.get_file() + "\n" # list files names in String
-		warningDialog.dialog_text = tr("NOT_IMPORTED") + "\n" + error
-		warningDialog.show()
-		not_imported = [] # reset not imported after warning showed up
-	
+	error_message(warningDialog, "NOT_IMPORTED", not_imported)
+	error_message(warningDialog2, "NOT_TMSHARE_MADE", not_made_tmshare)
+		
 	#print("imported : " + str(import_files))
 	#print("not_imported : " + str(not_imported))
 	if import_files.size() > 0: # if files imported show import section (prevent to show it with bad drag and drop)
 		show_import_section()
+
+func error_message(w_dialog, message:String, w_array:Array): # warning dialog node / error message (for translation) / array with files affected
+	if w_array.size() > 0:
+		var error = ""
+		for bad in w_array:
+			error += bad.get_file() + "\n" # list files names in String
+		w_dialog.dialog_text = tr(message) + "\n" + error
+		w_dialog.show()
+		w_array = [] # reset not imported after warning showed up (or any warning arrays)
+
+func have_zip_config_file(path:String):
+	var reader = ZIPReader.new()
+	var err = reader.open(path)
+	if err != OK:
+		return false
+	#var res = reader.read_file("LevelDesign_Exercise01.Map.Gbx.json")
+	var res = reader.get_files()
+	reader.close()
+	var config_present = false
+	for f in res:
+		if f.ends_with(".Map.Gbx.json"):
+			config_present = true
+	return config_present
 
 
 func show_import_button():
