@@ -24,8 +24,9 @@ func _ready() -> void:
 	else: # else load config
 		trackmania_path = config.get_value("PATHS", "trackmania_path")
 		if trackmania_path.ends_with("Trackmania"):
+			maps_path = trackmania_path + "/" + trackmania_maps_path
+		if trackmania_path.ends_with("Trackmania/"):
 			maps_path = trackmania_path + trackmania_maps_path
-	
 
 		
 	#print(trackmania_path)
