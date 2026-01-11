@@ -1,4 +1,4 @@
-extends Node
+extends Node ### THIS IS THE MAIN SINGLETON ###
 
 const trackmania_maps_path = "Maps/My Maps/" #TM2020 Maps path
 
