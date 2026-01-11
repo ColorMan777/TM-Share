@@ -17,3 +17,5 @@ DRAG_AND_DROP,Drag and drop or click to choose,Glisser-déposer les maps ou cliq
 LOGS,Logs :,Journaux :
 REMOVE_ALL,Remove ALL,Enlever TOUT
 REMOVE_SELECTED,Remove Selected,Enlever Sélection
+WARNING,WARNING,ATTENTION
+NOT_IMPORTED,Not imported (maps need to be in .zip format) : \n,Non importé (les maps doivent être sous format .zip) : \n
