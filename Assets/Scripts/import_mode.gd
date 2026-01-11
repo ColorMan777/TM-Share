@@ -7,7 +7,6 @@ extends Control
 @export var mapsIcons:Texture2D
 @export var warningDialog:Window
 
-
 var modeScene: String = "res://Assets/Scenes/MapOptions.tscn"
 
 var map_selection = [] # for menu selection only
@@ -47,6 +46,7 @@ func import_files_list(files):
 			error += bad.get_file() + "\n" # list files names in String
 		warningDialog.dialog_text = tr("NOT_IMPORTED") + "\n" + error
 		warningDialog.show()
+		not_imported = [] # reset not imported after warning showed up
 	
 	#print("imported : " + str(import_files))
 	#print("not_imported : " + str(not_imported))
@@ -63,14 +63,26 @@ func show_import_section():
 	importSection.visible = true
 
 func reset_import(all=false):
-	if all:
+	if all: # remove all
 		show_import_button()
 		import_files = []
 		map_selection = []
 		not_imported = []
 		itemList.clear()
 	else:
-		pass
+		itemList.deselect_all() # deselect all maps in item list
+		map_selection.sort() # sort selection bigger smaller numbers first
+		map_selection.reverse() # reverse to get bigger number first since we're going to remove by id : remove the end of the array first
+		for r in map_selection: # remove maps in selectio
+			#print(import_files)
+			#print(r)
+			import_files.remove_at(r)
+			#map_selection.remove_at(r)
+			itemList.remove_item(r)
+		map_selection = [] # reset map selection after every selected maps is removed
+		
+	if import_files.size() == 0: #0 maps = reset to button
+		show_import_button()
 
 func _on_import_button_pressed() -> void:
 	fileDialog.visible = true
@@ -81,3 +93,14 @@ func _on_remove_all_button_pressed() -> void:
 	
 func _on_remove_button_2_pressed() -> void:
 	reset_import()
+
+func _on_item_list_multi_selected(index: int, selected: bool) -> void: # SELECTION TO REMOVE MAPS
+	if selected:
+		if Input.is_key_pressed(KEY_SHIFT) or Input.is_key_pressed(KEY_CTRL): # add to selection if CTRL or SHIFT is pressed
+			if map_selection.find(index) == -1:
+				map_selection.append(index)
+		else:
+			map_selection = [index] #Put back selection to one item if no keys pressed
+	else:
+		map_selection.remove_at(map_selection.find(index)) #Deselction
+	

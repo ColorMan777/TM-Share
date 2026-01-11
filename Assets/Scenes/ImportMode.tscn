@@ -233,3 +233,4 @@ dialog_autowrap = true
 [connection signal="files_selected" from="MarginContainer/VBoxContainer2/MarginContainer/ImportButton/FileDialog" to="." method="_on_file_dialog_files_selected"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/HBoxContainer/RemoveAllButton" to="." method="_on_remove_all_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/HBoxContainer/RemoveButton2" to="." method="_on_remove_button_2_pressed"]
+[connection signal="multi_selected" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/ScrollContainer/ItemList" to="." method="_on_item_list_multi_selected"]
