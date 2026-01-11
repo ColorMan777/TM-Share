@@ -1,6 +1,8 @@
 # TM Share
  ## A tool to share Trackmania Maps easily (import/export)
 
+Trailer : https://www.youtube.com/watch?v=zQfv4YcwyRU
+
  Supports Trackania 2020 maps.
  
  You can now share your maps with local dependencies with a single zip file, and import it right away !
