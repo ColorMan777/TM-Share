@@ -20,3 +20,8 @@ REMOVE_SELECTED,Remove Selected,Enlever Sélection
 WARNING,WARNING,ATTENTION
 NOT_IMPORTED,Not imported (maps need to be in .zip format) : \n,Non importé (les maps doivent être sous format .zip) : \n
 NOT_TMSHARE_MADE,This file wasn’t made with TmShare and wasn’t added : \n,Ce fichier n’a pas été fait avec TmShare et n’a pas été ajouté : \n
+START_EXTRACT_ZIP,Started zip extraction,Début d’extraction de l’archive
+EXTRACT_ZIP_FINISHED,Extraction finished,Extraction finie
+READING_DEPS,Reading dependencies …,Lecture des dépendances …
+DEPS_ALREADY_EXIST,Dependencies already exists : ,Dépendances déjà existantes : 
+DEPS_COPIED,Dependencies copied !,Dépendances copiées !

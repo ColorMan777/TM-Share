@@ -214,6 +214,7 @@ dragger_visibility = 2
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
+theme_override_font_sizes/normal_font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_rse2r")
 bbcode_enabled = true
 text = "gggggggggggggggggggggggggggg[color=red]ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg[/color]ggggggggggg[color=yellow]ggggggggggggggggggggggggggggggggg[/color]ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"

@@ -7,6 +7,8 @@ var trackmania_path:String #TM2020 Directory Path
 var default_trackmania_path:String
 var maps_path:String #TM2020 maps path
 
+var import_logs_label:RichTextLabel
+
 func _ready() -> void:
 	get_tree().root.set_min_size(Vector2i(700,500))
 	
@@ -58,6 +60,9 @@ func get_trackmania_path(verify_exist=true): # return empty string if nothing is
 			elif not verify_exist:
 				p_final = p + ".steam/debian-installation/steamapps/compatdata/2225070/pfx/drive_c/users/steamuser/Documents/Trackmania/"
 			
+	if not p_final.ends_with("/"):
+		p_final = p_final + "/"
+		
 	return p_final
 
 func list_maps(complete_path=false) -> PackedStringArray:
@@ -268,16 +273,27 @@ func export_maps(map_path:String, export_path:String): ### EXPORT MAPS FUNCTION
 
 
 func import_maps(path:String): ### IMPORT MAPS BASED ON PATH + return progress in string
-	var base_dir = extract_all_from_zip(path)
+	var base_dir = extract_all_from_zip(path) # return main folder name
 	
 	var dir = DirAccess.open("user://" + base_dir)
 	
 	for f in dir.get_files():
-		if f.ends_with(".json"):
-			print(load_json("user://" + base_dir + "/" + f)) # read to get array of deps
+		if f.ends_with(".json"): #use json to get deps
+			var deps = load_json("user://" + base_dir + "/" + f) # read to get array of deps
+			import_logs_label.text += tr("READING_DEPS") + "\n"
 			#print("user://" + base_dir + "/" + f)
-			
-	
+			for d in deps:
+				#print("user://" + base_dir + "/" + d)
+				#print(trackmania_path + d)
+				if not dir.file_exists(trackmania_path + d):
+					dir.copy("user://" + base_dir + "/" + d, trackmania_path + d)
+				else:
+					import_logs_label.text += "[color=yellow]" + tr("DEPS_ALREADY_EXIST") + d + "[/color]" + "\n"
+				
+			import_logs_label.text += "[color=green]" + tr("DEPS_COPIED") + "[/color]" + "\n"
+		
+		if f.ends_with("Gbx"): #Get map gbx
+			print(maps_path + f)
 
 func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this function to : https://github.com/jhlothamer/godot_project_zip/blob/main/addons/project_zip/godot_project_zip_plugin.gd
 	var dir := DirAccess.open("user://%s" % dir_name) # Thanks a lot it was so hard I could't figure it out :(
@@ -306,6 +322,7 @@ func rmdir(directory: String) -> void: #Credits : https://github.com/Elip100/god
 	DirAccess.remove_absolute(directory)
 
 func extract_all_from_zip(path):
+	import_logs_label.text += tr("START_EXTRACT_ZIP") + "\n"
 	var reader = ZIPReader.new()
 	reader.open(path)
 
@@ -337,4 +354,6 @@ func extract_all_from_zip(path):
 		var buffer = reader.read_file(file_path)
 		file.store_buffer(buffer)
 		
+	import_logs_label.text += tr("EXTRACT_ZIP_FINISHED") + "\n"
+	
 	return files_dir

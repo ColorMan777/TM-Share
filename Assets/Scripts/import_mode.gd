@@ -22,6 +22,7 @@ func _ready() -> void:
 	get_viewport().files_dropped.connect(on_files_dropped)
 	show_import_button()
 	itemList.clear()
+	TmShare.import_logs_label = logsLabel
 
 func _on_back_button_pressed() -> void:
 	get_tree().change_scene_to_file(modeScene)
