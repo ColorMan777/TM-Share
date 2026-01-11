@@ -16,7 +16,7 @@ Trailer : https://www.youtube.com/watch?v=zQfv4YcwyRU
  ## HOW DOES IT WORK ?
 
 Basically the app reads .Gbx maps and copy dependencies along in a zip (+ create a JSON in the archive).
-In import mode it automatically extract everything in "My Maps" Folder.
+In import mode it automatically extract maps in "My Maps" Folder and dependencies where they need to be based on their original path.
 You can do batch import / export with it to speed up the process.
 
 
