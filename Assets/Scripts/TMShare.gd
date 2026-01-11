@@ -220,36 +220,40 @@ func load_json(path:String):
 
 func export_maps(map_path:String, export_path:String): ### EXPORT MAPS FUNCTION
 	var deps = parse_gbx(map_path) # deps array from map path
-	#print(deps)
 	
 	var dir = DirAccess.open("user://") # user:// is used as a temp folder
 	var map_name = map_path.get_file().replace(".Map.Gbx", "")
 	var deps_array = [] # config file for easier import later
-	for d in deps:
-		var d_path
-		if trackmania_path.ends_with("/"):
-			d_path = trackmania_path + d
-		else:
-			d_path = trackmania_path + "/" + d
-		#print(d_path)
-		var d_file = FileAccess.open(d_path, FileAccess.READ) # read to see if exist before copy
-		if d_file != null: #built-in trackmania dependencies are skipped here
-			
-			deps_array.append(d) #local deps added (not built-in trackmania)
-			var d_directories = d_path.get_base_dir().replace(trackmania_path, "")
-			
-			
-			#print(ProjectSettings.globalize_path("user://" + map_name))
-			if not dir.dir_exists("user://" + map_name):
-				dir.make_dir_recursive("user://" + map_name + "/" + d_directories) # create firsts folders for 1st dependency
-				#print(ProjectSettings.globalize_path("user://" + map_name + "/" + d_directories))
-				dir.copy(d_path, "user://" + map_name + "/" + d) # copy 1st file
+	if not deps == []:
+		for d in deps:
+			var d_path
+			if trackmania_path.ends_with("/"):
+				d_path = trackmania_path + d
+			else:
+				d_path = trackmania_path + "/" + d
+			#print(d_path)
+			var d_file = FileAccess.open(d_path, FileAccess.READ) # read to see if exist before copy
+			if d_file != null: #built-in trackmania dependencies are skipped here
 				
-			else: # create folders for other dependencies
-				dir.make_dir_recursive("user://" + map_name + "/" + d_directories) # make directories for other files
-				#print(d_path)
-				#print(ProjectSettings.globalize_path("user://" + map_name + "/" + d))
-				dir.copy(d_path, "user://" + map_name + "/" + d) # copy files and overwrite
+				deps_array.append(d) #local deps added (not built-in trackmania)
+				var d_directories = d_path.get_base_dir().replace(trackmania_path, "")
+				
+				
+				#print(ProjectSettings.globalize_path("user://" + map_name))
+				if not dir.dir_exists("user://" + map_name):
+					dir.make_dir_recursive("user://" + map_name + "/" + d_directories) # create firsts folders for 1st dependency
+					#print(ProjectSettings.globalize_path("user://" + map_name + "/" + d_directories))
+					dir.copy(d_path, "user://" + map_name + "/" + d) # copy 1st file
+					
+				else: # create folders for other dependencies
+					dir.make_dir_recursive("user://" + map_name + "/" + d_directories) # make directories for other files
+					#print(d_path)
+					#print(ProjectSettings.globalize_path("user://" + map_name + "/" + d))
+					dir.copy(d_path, "user://" + map_name + "/" + d) # copy files and overwrite
+
+	else: # IF NO DEPENDENCIES
+		#print("user://" + map_name)
+		dir.make_dir("user://" + map_name) #make base folder in user:// (temporary)
 	
 	#print(ProjectSettings.globalize_path("user://" + map_name + "/" + map_path.get_file())) #GBX path (temp dir)
 	dir.copy(map_path, "user://" + map_name + "/" + map_path.get_file()) #copy map
