@@ -50,6 +50,15 @@ func show_import_section():
 	importButton.visible = false
 	importSection.visible = true
 
+func reset_import(all=false):
+	if all:
+		show_import_button()
+		import_files = []
+		map_selection = []
+		not_imported = []
+		itemList.clear()
+	else:
+		pass
 
 func _on_import_button_pressed() -> void:
 	fileDialog.visible = true
@@ -58,3 +67,9 @@ func _on_import_button_pressed() -> void:
 func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
 	import_files_list(paths)
 	
+
+func _on_remove_all_button_pressed() -> void:
+	reset_import(true)
+	
+func _on_remove_button_2_pressed() -> void:
+	reset_import()

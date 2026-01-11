@@ -223,3 +223,5 @@ size_flags_vertical = 8
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/Control/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="files_selected" from="MarginContainer/VBoxContainer2/MarginContainer/ImportButton/FileDialog" to="." method="_on_file_dialog_files_selected"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/HBoxContainer/RemoveAllButton" to="." method="_on_remove_all_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer2/MarginContainer/HSplitContainer/VBoxContainer2/HBoxContainer/RemoveButton2" to="." method="_on_remove_button_2_pressed"]
