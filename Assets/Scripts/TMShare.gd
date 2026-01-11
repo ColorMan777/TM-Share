@@ -286,14 +286,26 @@ func import_maps(path:String): ### IMPORT MAPS BASED ON PATH + return progress i
 				#print("user://" + base_dir + "/" + d)
 				#print(trackmania_path + d)
 				if not dir.file_exists(trackmania_path + d):
-					dir.copy("user://" + base_dir + "/" + d, trackmania_path + d)
+					dir.copy("user://" + base_dir + "/" + d, trackmania_path + d) # COPY DEPENDENCY
 				else:
 					import_logs_label.text += "[color=yellow]" + tr("DEPS_ALREADY_EXIST") + d + "[/color]" + "\n"
 				
 			import_logs_label.text += "[color=green]" + tr("DEPS_COPIED") + "[/color]" + "\n"
 		
+	for f in dir.get_files(): # map after so new loop
 		if f.ends_with("Gbx"): #Get map gbx
-			print(maps_path + f)
+			#print("user://" + base_dir + "/" + f)
+			#print(maps_path + f)
+			if not dir.file_exists(maps_path + f):
+				dir.copy("user://" + base_dir + "/" + f, maps_path + f) # COPY MAP GBX
+				import_logs_label.text += "[color=green]" + tr("MAP_COPIED") + f + "[/color]" + "\n"
+			else:
+				import_logs_label.text += "[color=red]" + tr("MAP_ALREADY_EXIST") + f + "[/color]" + "\n"
+	
+	#print("user://" + base_dir)
+	rmdir("user://" + base_dir) #Delete temp directory
+	
+
 
 func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this function to : https://github.com/jhlothamer/godot_project_zip/blob/main/addons/project_zip/godot_project_zip_plugin.gd
 	var dir := DirAccess.open("user://%s" % dir_name) # Thanks a lot it was so hard I could't figure it out :(

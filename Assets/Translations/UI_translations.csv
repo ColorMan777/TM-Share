@@ -25,3 +25,5 @@ EXTRACT_ZIP_FINISHED,Extraction finished,Extraction finie
 READING_DEPS,Reading dependencies …,Lecture des dépendances …
 DEPS_ALREADY_EXIST,Dependencies already exists : ,Dépendances déjà existantes : 
 DEPS_COPIED,Dependencies copied !,Dépendances copiées !
+MAP_ALREADY_EXIST,This map already exist : ,Cette map existe déjà : 
+MAP_COPIED,Map copied : ,Map copiée : 
