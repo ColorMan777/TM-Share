@@ -268,7 +268,16 @@ func export_maps(map_path:String, export_path:String): ### EXPORT MAPS FUNCTION
 
 
 func import_maps(path:String): ### IMPORT MAPS BASED ON PATH + return progress in string
-	pass
+	var base_dir = extract_all_from_zip(path)
+	
+	var dir = DirAccess.open("user://" + base_dir)
+	
+	for f in dir.get_files():
+		if f.ends_with(".json"):
+			print(load_json("user://" + base_dir + "/" + f)) # read to get array of deps
+			#print("user://" + base_dir + "/" + f)
+			
+	
 
 func zip_dir(dir_name: String, writer:ZIPPacker) -> void: # Credits for this function to : https://github.com/jhlothamer/godot_project_zip/blob/main/addons/project_zip/godot_project_zip_plugin.gd
 	var dir := DirAccess.open("user://%s" % dir_name) # Thanks a lot it was so hard I could't figure it out :(
@@ -295,3 +304,37 @@ func rmdir(directory: String) -> void: #Credits : https://github.com/Elip100/god
 	for dir in DirAccess.get_directories_at(directory):
 		rmdir(directory.path_join(dir))
 	DirAccess.remove_absolute(directory)
+
+func extract_all_from_zip(path):
+	var reader = ZIPReader.new()
+	reader.open(path)
+
+	# Destination directory for the extracted files (this folder must exist before extraction).
+	# Not all ZIP archives put everything in a single root folder,
+	# which means several files/folders may be created in `root_dir` after extraction.
+	var root_dir = DirAccess.open("user://") #USER AS A TEMP DIRECTORY
+
+	var files = reader.get_files()
+	
+	var files_dir
+	
+	for file_path in files:
+		#print(file_path)
+		# If the current entry is a directory.
+		if file_path.ends_with(".json"): # get highest directory (based on the json that is in it)
+			#print(f.get_base_dir())
+			files_dir = file_path.get_base_dir()
+			
+		if file_path.ends_with("/"):
+			root_dir.make_dir_recursive(file_path)
+			continue
+
+		# Write file contents, creating folders automatically when needed.
+		# Not all ZIP archives are strictly ordered, so we need to do this in case
+		# the file entry comes before the folder entry.
+		root_dir.make_dir_recursive(root_dir.get_current_dir().path_join(file_path).get_base_dir())
+		var file = FileAccess.open(root_dir.get_current_dir().path_join(file_path), FileAccess.WRITE)
+		var buffer = reader.read_file(file_path)
+		file.store_buffer(buffer)
+		
+	return files_dir
