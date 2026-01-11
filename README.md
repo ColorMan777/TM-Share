@@ -11,6 +11,6 @@ Trailer : https://www.youtube.com/watch?v=zQfv4YcwyRU
  English and French translations.
  
  If you want you can test it out with my maps :
- https://github.com/ColorMan777/TrackMania-Maps/tree/main
+ https://github.com/ColorMan777/TrackMania-Maps/
  
 <img width="1920" height="1080" alt="TmShare_Splash" src="https://github.com/user-attachments/assets/cd6aca5e-cc1f-4f34-9f57-40a514736e13" />
