@@ -21,7 +21,7 @@ The first time you will launch TMShare, it will try to detect your Trackmania in
 <img width="1208" height="733" alt="Screenshot_20260112_104910" src="https://github.com/user-attachments/assets/eec161f6-40f5-446d-a690-00ed4a641fce" />
 
 If your Trackmania user folder isn't detected, you can try to find it by hand.   
-On Windows, the user data folder is most often in ```C:\Documents\Trackmania for example.```  
+On Windows, the user data folder is most often in ```C:\Documents\Trackmania``` for example.  
 Or ```D:\Documents\Trackmania``` if you have 2 partitions.  
 On Linux, for the steam installation it's located in ```/home/<user>/.steam/debian-installation/steamapps/compatdata/2225070/pfx/drive_c/users/steamuser/Documents/Trackmania/```
 <img width="1208" height="733" alt="Screenshot_20260112_104931" src="https://github.com/user-attachments/assets/0082d8f0-f5c3-4019-b6ac-e3af7c721c7e" />
