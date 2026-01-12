@@ -22,11 +22,14 @@ func _ready() -> void:
 		if trackmania_maps_path != "":
 			maps_path = get_trackmania_path() + trackmania_maps_path
 	else: # else load config
-		trackmania_path = config.get_value("PATHS", "trackmania_path")
-		if trackmania_path.ends_with("Trackmania"):
-			maps_path = trackmania_path + "/" + trackmania_maps_path
-		if trackmania_path.ends_with("Trackmania/"):
-			maps_path = trackmania_path + trackmania_maps_path
+		if DirAccess.dir_exists_absolute(config.get_value("PATHS", "trackmania_path")):
+			trackmania_path = config.get_value("PATHS", "trackmania_path")
+			if trackmania_path.ends_with("Trackmania") or trackmania_path.ends_with("Trackmania2020"):
+				maps_path = trackmania_path + "/" + trackmania_maps_path
+			if trackmania_path.ends_with("Trackmania/") or trackmania_path.ends_with("Trackmania2020/"):
+				maps_path = trackmania_path + trackmania_maps_path
+		else:
+			trackmania_path = config.get_value("PATHS", "trackmania_path") + " - DOES NO EXIST -"
 
 		
 	#print(trackmania_path)
@@ -60,11 +63,16 @@ func get_trackmania_path(verify_exist=true): # return empty string if nothing is
 					p2 = p2.erase(p2.length() - "AppData/Roaming/Godot/app_userdata/TM-Share/".length(), "AppData/Roaming/Godot/app_userdata/TM-Share/".length())
 					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania/"):
 						p_final = p2 + "Documents/Trackmania/"
+					if DirAccess.dir_exists_absolute(p2 + "Documents/Trackmania2020/"): #Trackmania 2020 folder first if it exists
+						p_final = p2 + "Documents/Trackmania2020/"
 					
 				else: # else search Disk / Documents
 					if DirAccess.dir_exists_absolute(DirAccess.get_drive_name(i) + "/Documents/Trackmania/") and verify_exist:
 						p_final = DirAccess.get_drive_name(i) + "/Documents/Trackmania/"
-					elif not verify_exist and p_final == "":
+					if DirAccess.dir_exists_absolute(DirAccess.get_drive_name(i) + "/Documents/Trackmania2020/") and verify_exist: # Trackmania 2020 if it exists will be prioritized
+						p_final = DirAccess.get_drive_name(i) + "/Documents/Trackmania2020/"
+						
+					if not verify_exist and p_final == "":
 						p_final = "D:/Documents/Trackmania/"
 			
 		"Linux":

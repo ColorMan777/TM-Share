@@ -20,7 +20,7 @@ func _ready() -> void:
 	
 	trackmaniaPathButton.default_value = TmShare.default_trackmania_path
 	
-	if TmShare.trackmania_path != "" and TmShare.trackmania_path.ends_with("Trackmania") or TmShare.trackmania_path.ends_with("Trackmania/"):
+	if TmShare.trackmania_path != "" and TmShare.trackmania_path.ends_with("Trackmania") or TmShare.trackmania_path.ends_with("Trackmania/") or TmShare.trackmania_path.ends_with("Trackmania2020/")  or TmShare.trackmania_path.ends_with("Trackmania2020"):
 		update_text_colors(true)
 	
 	else:
