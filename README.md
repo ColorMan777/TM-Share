@@ -54,8 +54,8 @@ Once it's done, TM Share will list all the maps names. If the names are correct,
 
  ## HOW DOES IT WORK ?
 
-Basically the app reads .Gbx maps and copy dependencies along in a zip (+ create a JSON in the archive).
-In import mode it automatically extract maps in "My Maps" Folder and dependencies where they need to be based on their original path.
+Basically the app reads .Gbx maps and copy dependencies along in a zip (+ create a JSON in the archive).  
+In import mode it automatically extract maps in "My Maps" Folder and dependencies where they need to be based on their original path.  
 You can do batch import / export with it to speed up the process.
 
 
